@@ -1,0 +1,46 @@
+
+
+<button type="button" class="close" ng-click="cancel()">
+    <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
+</button>
+
+<div class="modal-header">
+    <h3 class="modal-title">Add/Edit Products [ID:]</h3>
+</div>
+<div class="modal-body">
+    <form name="Productform" class="form-horizontal" roles="form" novalidate>
+        <formelement label="NAME" mod="product">
+                <input type="text" class="form-control" name="name" placeholder="NAME" ng-model="product.name"  focus/>
+        </formelement>
+        <formelement label="DESCRIPTION" mod="product">
+            <textarea class="form-control" name="description" placeholder="DESCRIPTION" ng-model="product.description">{{product.description}}</textarea>
+        </formelement>
+        <formelement label="PRICE" mod="product">
+                <input type="text" name="price" class="form-control" placeholder="PRICE" ng-model="product.price"  onlynum/>
+                <small class="errorMessage" ng-show="product_form.price.$dirty && product_form.price.$invalid"> Enter the price.</small>
+        </formelement>
+        <formelement label="STOCK" mod="product">
+                <input type="text" name="stock" class="form-control" placeholder="STOCK" ng-model="product.stock" onlynum/>
+                <small class="errorMessage" ng-show="product_form.stock.$dirty && product_form.stock.$invalid"> Enter the available stock.</small>
+        </formelement>
+        <formelement label="PACKING" mod="product">
+                <input type="text" name="packing" class="form-control" placeholder="PACKING" ng-model="product.packing"/>
+                <small class="errorMessage" ng-show="product_form.packing.$dirty && product_form.packing.$invalid"> Enter the Packing.</small>
+        </formelement>
+        <hr>
+        <div class="model-footer">
+            <formelement  label="">
+                    <div class="text-right">
+                        <a class="btn btn-sm" ng-click="cancel()"><i class="ace-icon fa fa-reply"></i>Cancel</a>
+                        <button ng-disabled="product_form.$invalid || enableUpdate"
+                                class="btn btn-sm btn-primary"
+                                type="submit" ng-click="AddProduct(product,product._id)">
+                            <i class="fa fa-camera-retro"></i>{{buttonText}}
+                        </button>
+                    </div>
+            </formelement>
+        </div>
+
+    </form>
+
+</div>
