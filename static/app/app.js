@@ -36,6 +36,9 @@ app.controller('ProductCtrl', function($scope,$location,$modal,$filter,$http){
             $scope.products={};
         });
     };  
+    $scope.changeStatus = function(product,id){
+                    
+     };
 
     refresh();
 
@@ -61,7 +64,6 @@ app.controller('ProductCtrl', function($scope,$location,$modal,$filter,$http){
                 }
             }
         });
-         
     }
 
     $scope.deleteProduct=function(id){
@@ -74,28 +76,42 @@ app.controller('ProductCtrl', function($scope,$location,$modal,$filter,$http){
     
 });
 
-app.controller('EditCtrl', function($scope,$modalInstance,item,$http){
+app.controller('EditCtrl', function($scope,$modalInstance,item,$http,$route){
     
 
     $scope.product=angular.copy(item);
 
+    var id = Math.floor((Math.random()*100) + 1)
+    console.log(id);
     
     $scope.cancel=function(){
         $modalInstance.dismiss('Close');
     };
-   
-    $scope.title = (item.id>0) ? "Add product" : "Edit product"; 
-    $scope.buttonText = (item.id>0) ? "Update product" : "Add new product";
-    
+
+        if (item.name==0) {
+            $scope.title="Add Product";
+            $scope.buttonText="Add new Product";
+        }else{
+            $scope.title="Edit Product";
+            $scope.buttonText="Update Product";
+       }
+
         var original = item;
         $scope.isClean = function() {
             return angular.equals(original, $scope.product);
         }
+        
+        var newfeed = function(){
+            $http.get('/warehouse').success(function(result){
+            console.log('I got the newfeed data');
+            $scope.warehouse=result;
+            $scope.products={};
+            });
+        }
 
-
-    $scope.AddProduct=function(product,id){
-            if (product.id>0 ) {
-                $http.put('/warehouse/' + id,product).success(function(response){
+    $scope.AddProduct=function(product){
+            if (product.length>0 ) {
+                $http.put('/warehouse/' + id,$scope.product).success(function(response){
                         if(response.status != 'error'){
                             var x = angular.copy(product);
                             x.save='update';
@@ -106,19 +122,19 @@ app.controller('EditCtrl', function($scope,$modalInstance,item,$http){
                 });
             }else{
                 product.status = 'In Stock';    
-                $http.post('/warehouse',product).success(function(response){
+                $http.post('/warehouse',$scope.product).success(function(response){
                        if(response.status != 'error'){
                             var x = angular.copy(product);
                             x.save = 'insert';
-                            $modalInstance.close(x);
+                            $modalInstance.close();
+                            $route.reload();
                        }else{
                         console.log(response);
                        } 
                });
             } 
     };
-
-
+    newfeed();
 });
 
 app.directive('formelement',function(){

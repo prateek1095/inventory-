@@ -2,8 +2,9 @@
 <hr>
 
 <div class="responsive">
-    <button type="button" class="btn btn-danger" ng-click="open(product)"><span class="glyphicon glyphicon-plus">&nbsp;Add new products</span></button>
+    <button type="button" class="btn btn-danger " id="add" ng-click="open(product)"><span class="glyphicon glyphicon-plus">&nbsp;Add new products</span></button>
     <hr>
+
 <div class="table-responsive">
     <div class="panel panel-info">
         <div class="panel-heading">
@@ -32,7 +33,7 @@
                 animate-on-change="c.packing + c.stock + c.price + c.description" ng-animate="' animate' ">
                 <td>{{c.id}}</td><td>{{c.name}}</td><td>{{c.price}}</td><td>{{c.stock}}</td><td>{{c.packing}}</td><td>{{c.description}}</td>
                 <td>
-                    <button class="btn btn-success" ng-class="{Stock:'btn-success',Inactive:''}[c.status] " style="margin:0" ng-click="changeStatus()">{{c.status}}</button>
+                    <button class="btn btn-success" class="close" data-dismiss="alert" aria-label="Close" ng-class="{Stock:'btn-success',Inactive:''}[c.status] " style="margin:0" ng-click="changeStatus()">{{c.status}}</button>
                 </td>
                 <td>
                     <div class="btn-group">

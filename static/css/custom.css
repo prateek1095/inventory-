@@ -159,6 +159,12 @@ margin-top: -4.5px;
   font-family: sans-serif;
   font-size: 1.5em;
 }
+
+#add{
+  padding: 10px;
+  font-family: sans-serif;
+  font-size: 1.5em;
+}
 /*
  * Globals
  */
