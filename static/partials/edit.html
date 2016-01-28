@@ -1,11 +1,8 @@
 
 
-<button type="button" class="close" ng-click="cancel()">
-    <i class="fa fa-times-circle-o" style="margin:10px;color:blue;"></i>
-</button>
 
 <div class="modal-header">
-    <h3 class="modal-title">Add/Edit Products [ID:]</h3>
+    <h3 class="modal-title">Add/Edit Product [ID:]</h3>
 </div>
 <div class="modal-body">
     <form name="Productform" class="form-horizontal" roles="form" novalidate>
@@ -38,8 +35,9 @@
                         <button ng-disabled="product_form.$invalid || enableUpdate"
                                 class="btn btn-sm btn-primary"
                                 type="submit" ng-click="AddProduct(product)">
-                                Add/Update
+                                Add 
                         </button>
+                        <button ng-click="update(product._id)" class="btn btn-sm btn-info" type="submit">Update</button>
                     </div>
             </formelement>
         </div>
