@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Inventory Management System</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/ style.css">
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   
@@ -12,8 +12,9 @@
 <body style="background-color:rgba(0,0,0,0)">
     <div class="inv" style="background-color:black">
       <div class="container">
-          <nav class="inv-nav">
+          <nav class="inv-nav" ng-controller="IndexCtrl">
               <a href="#" class="inv-nav-item active">Inventory Management System</a>
+              <button class="btn  btn-link" ng-click="login()" style="float:right;text-decoration:none;font-size:1.3em">Login</button>
           </nav>
       </div>  
     </div>

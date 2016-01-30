@@ -29,7 +29,7 @@
             </tr>
         </thead> 
         <tbody>
-            <tr ng-repeat="c in warehouse | filter:filterProduct| orderBy:'-id' " id="{{c.id}}"
+            <tr ng-repeat="c in warehouse | filter:filterProduct| orderBy:'id' " id="{{c.id}}"
                 animate-on-change="c.packing + c.stock + c.price + c.description" ng-animate="' animate' ">
                 <td>{{c.id}}</td><td>{{c.name}}</td><td>{{c.price}}</td><td>{{c.stock}}</td><td>{{c.packing}}</td><td>{{c.description}}</td>
                 <td>

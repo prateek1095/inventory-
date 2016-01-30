@@ -15,7 +15,43 @@ app.config(['$routeProvider',function($routeProvider) {
         });
 }]);
 
+app.controller('IndexCtrl',  function($scope,$modal){
+    
+    $scope.login=function(size,p){
+        var modalInstance = $modal.open({
+                templateUrl:"partials/login.html",
+                controller:'LogCtrl',
+                size:size,
+                resolve: {
+                    item : function(){
+                        return p;
+                    }
+                }
+        });
+    }
 
+});
+
+app.controller('LogCtrl',  function($scope,$modalInstance,item,$location){
+            
+            $scope.cancel=function(){
+                $modalInstance.dismiss('Close');
+            };
+        
+            
+
+            $scope.submit=function(users){
+                $scope.users={
+                'username' : 'prateek1095',
+                'email'    : 'prateek10.dtu@gmail.com'
+            };
+                if(users){
+                    $location.path('/home');
+                    $modalInstance.close();
+                }
+    }
+
+});
 
 app.controller('MainCtrl', function($scope,$location){
     $scope.go=function(){
@@ -99,13 +135,6 @@ app.controller('EditCtrl', function($scope,$modalInstance,item,$http,$route){
         $modalInstance.dismiss('Close');
     };
 
-        if (item.id==0) {
-            $scope.title="Add Product";
-            $scope.buttonText="Add new Product";
-        }else{
-            $scope.title="Edit Product";
-            $scope.buttonText="Update Product";
-       }
 
         var original = item;
         $scope.isClean = function() {
