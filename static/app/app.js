@@ -10,14 +10,22 @@ app.config(['$routeProvider',function($routeProvider) {
             templateUrl:'partials/product.html',
             controller:'ProductCtrl'
         }).
+        when('/view',{
+            templateUrl:'partials/view.html',
+            controller:'ViewCtrl'
+        }).
         otherwise({
             redirectTo:'/'
         });
 }]);
 
-app.controller('IndexCtrl',  function($scope,$modal){
-    
-    $scope.login=function(size,p){
+app.controller('MainCtrl', function($scope,$location,$modal){
+    $scope.go=function(){
+        $location.path('/view');
+
+    };
+
+     $scope.login=function(size,p){
         var modalInstance = $modal.open({
                 templateUrl:"partials/login.html",
                 controller:'LogCtrl',
@@ -32,35 +40,36 @@ app.controller('IndexCtrl',  function($scope,$modal){
 
 });
 
+
 app.controller('LogCtrl',  function($scope,$modalInstance,item,$location){
             
             $scope.cancel=function(){
                 $modalInstance.dismiss('Close');
             };
         
-            
-
             $scope.submit=function(users){
                 $scope.users={
                 'username' : 'prateek1095',
                 'email'    : 'prateek10.dtu@gmail.com'
             };
-                if(users){
-                    $location.path('/home');
-                    $modalInstance.close();
-                }
+        if(!users.username || !users.email){
+            $location.path('/');
+            $modalInstance.close();
+        } 
+        else{
+
+            $location.path('/home');
+            $modalInstance.close();
+
+        }               
     }
 
+
+
 });
 
-app.controller('MainCtrl', function($scope,$location){
-    $scope.go=function(){
-        $location.path('/home');
-    };
-});
 
-app.controller('ProductCtrl', function($scope,$location,$modal,$filter,$http){
-
+app.controller('ViewCtrl',  function($scope,$http){
     $scope.product={};
 
     console.log("Hello World from controller");
@@ -75,6 +84,40 @@ app.controller('ProductCtrl', function($scope,$location,$modal,$filter,$http){
     $scope.changeStatus = function(product,id){
                     
      };
+
+    refresh();
+
+    $scope.cols=[
+                    {text:'ID',predicate:'id',sortable:true,dataType:"number"},
+                    {text:'Name',predicate:'name',sortable:true},
+                    {text:'Price',predicate:'price',sortable:true},
+                    {text:'Stock',predicate:'stock',sortable:true},
+                    {text:'Packing',predicate:'packing',sortable:true,dataType:"number"},
+                    {text:'Description',predicate:'description',sortable:true},
+                    {text:'Status',predicate:'status',sortable:true}                
+    ];
+});
+
+app.controller('ProductCtrl', function($scope,$location,$modal,$filter,$http,$route){
+    
+
+    $scope.product={};
+
+    console.log("Hello World from controller");
+
+    var refresh = function(){
+        $http.get('/warehouse').success(function(response){
+            console.log('I got the requested data');
+            $scope.warehouse=response;
+            $scope.products={};
+        });
+    };
+
+    $scope.changeStatus = function(product,c){
+            
+            c.status="No Stock";
+            c.stock=0;
+    };
 
     refresh();
 
@@ -102,12 +145,17 @@ app.controller('ProductCtrl', function($scope,$location,$modal,$filter,$http){
         });
     }
 
-    $scope.deleteProduct=function(id){
-        if(confirm("Are you sure to remove the product")){
-        $http.delete('/warehouse/' + id).success(function(response){
-            refresh();
-                });
-        }
+    $scope.deleteProduct=function(p,size){
+        var modalInstance = $modal.open({
+            templateUrl:'partials/delete.html',
+            controller:'DeleteCtrl',
+            size:size,
+            resolve: {
+                item: function(){
+                    return p;
+                }
+            }
+        });
     };
 
     $scope.edit=function(p,size){
@@ -169,11 +217,28 @@ app.controller('UpdateCtrl',  function($scope,$http,$route,$modalInstance,item){
             };
 
             $scope.update=function(id){
-                $http.put('/warehouse/' + id,$scope.product).success(function(response){
+                    $http.put('/warehouse/' + id,$scope.product).success(function(response){
                     $modalInstance.close();
                     $route.reload();
                 })
-            }
+    }
+});
+
+app.controller('DeleteCtrl',  function($scope,$http,$route,$modalInstance,item){
+        $scope.product=angular.copy(item);
+
+        $scope.cancel=function(){
+        $modalInstance.dismiss('Close');
+            };
+
+        $scope.confirmdelete=function(id){
+            $http.delete('/warehouse/' + id).success(function(response){
+                    $modalInstance.close();
+                    $route.reload();
+            });
+        }    
+
+
 });
 
 app.directive('formelement',function(){

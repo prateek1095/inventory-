@@ -1,9 +1,6 @@
 <h3 class="inv-post-title" style="font-family:serif">List of all items</h3>
 <hr>
 
-<div class="responsive">
-    <button type="button" class="btn btn-danger" id="add" ng-click="open(product)"><span class="glyphicon glyphicon-plus">&nbsp;Add new products</span></button>
-    <hr>
 
 <div class="table-responsive">
     <div class="panel panel-info">
@@ -33,15 +30,9 @@
                 animate-on-change="c.packing + c.stock + c.price + c.description" ng-animate="' animate' ">
                 <td>{{c.id}}</td><td>{{c.name}}</td><td>{{c.price}}</td><td>{{c.stock}}</td><td>{{c.packing}}</td><td>{{c.description}}</td>
                 <td>
-                    <button class="btn btn-success" class="close" data-dismiss="alert" aria-label="Close" ng-class="{In Stock:'btn-success',No Stock:'btn-primary'}[c.status] " style="margin:0" ng-click="changeStatus(product,c)">{{c.status}}</button>
+                    <button class="btn btn-success" class="close" data-dismiss="alert" aria-label="Close" ng-class="{Stock:'btn-success',Inactive:''}[c.status] " style="margin:0" ng-click="changeStatus()">{{c.status}}</button>
                 </td>
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default" ng-click="edit(c)"><span class="glyphicons glyphicons-pencil">Edit</span></button>
-                        <button type="button" class="btn btn-danger" ng-click="deleteProduct(c)">Delete</button>
-                    </div>
-                </td>    
-            </tr>
+                </tr>
         </tbody>   
         </table>
             </div>
