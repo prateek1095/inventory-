@@ -5,11 +5,22 @@
     <button type="button" class="btn btn-danger" id="add" ng-click="open(product)"><span class="glyphicon glyphicon-plus">&nbsp;Add new products</span></button>
     <hr>
 
+
+
 <div class="table-responsive">
     <div class="panel panel-info">
         <div class="panel-heading">
                 List of Products
-                <div class="sw-search">
+                <div class="dropdown" style="float:right;margin-top:-4.5px;margin-right:2em">
+                  <button class="btn  btn-link dropdown-toggle" type="button" data-toggle="dropdown">Sort By
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu" style="font-size:1.2em">
+                    <li><a ng-click="sortby()" ng-model="filtercategory">Clothes</a></li>
+                    <li><a href="#">Electronics</a></li>
+                    <li><a href="#">Sports</a></li>
+                  </ul>
+                </div>
+                <div class="sw-search" style="margin-right:2em">
                     <div class="nav-search" id="nav-search">
                         Filter: <span class="input-icon">
                             <input placeholder="search for products..." class="nav-search-input" ng-model="filterProduct"           autocomplete="off" type="text" style="width:300px;" focus>
@@ -29,11 +40,11 @@
             </tr>
         </thead> 
         <tbody>
-            <tr ng-repeat="c in warehouse | filter:filterProduct| orderBy:'id' " id="{{c.id}}"
+            <tr ng-repeat="c in warehouse | filter:filterProduct| filter:filtercategory| orderBy:'id' " id="{{c.id}}"
                 animate-on-change="c.packing + c.stock + c.price + c.description" ng-animate="' animate' ">
-                <td>{{c.id}}</td><td>{{c.name}}</td><td>{{c.price}}</td><td>{{c.stock}}</td><td>{{c.packing}}</td><td>{{c.description}}</td>
+                <td>{{c.id}}</td><td>{{c.category}}</td><td>{{c.name}}</td><td>{{c.price}}</td><td>{{c.stock}}</td><td>{{c.packing}}</td><td>{{c.description}}</td>
                 <td>
-                    <button class="btn btn-success" class="close" data-dismiss="alert" aria-label="Close" ng-class="{In Stock:'btn-success',No Stock:'btn-primary'}[c.status] " style="margin:0" ng-click="changeStatus(product,c)">{{c.status}}</button>
+                    <button class="btn btn-success" class="close" data-dismiss="alert" aria-label="Close" ng-class="[{ Stock:'btn-success',Inactive:''}][c.status] " style="margin:0" ng-click="changeStatus(product,c)">{{c.status}}</button>
                 </td>
                 <td>
                     <div class="btn-group">

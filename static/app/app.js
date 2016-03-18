@@ -89,6 +89,7 @@ app.controller('ViewCtrl',  function($scope,$http){
 
     $scope.cols=[
                     {text:'ID',predicate:'id',sortable:true,dataType:"number"},
+                    {text:'Category',predicate:true,sortable:true},
                     {text:'Name',predicate:'name',sortable:true},
                     {text:'Price',predicate:'price',sortable:true},
                     {text:'Stock',predicate:'stock',sortable:true},
@@ -119,10 +120,13 @@ app.controller('ProductCtrl', function($scope,$location,$modal,$filter,$http,$ro
             c.stock=0;
     };
 
+
+
     refresh();
 
     $scope.cols=[
                     {text:'ID',predicate:'id',sortable:true,dataType:"number"},
+                    {text:'Category',predicate:true,sortable:true},
                     {text:'Name',predicate:'name',sortable:true},
                     {text:'Price',predicate:'price',sortable:true},
                     {text:'Stock',predicate:'stock',sortable:true},
@@ -131,6 +135,12 @@ app.controller('ProductCtrl', function($scope,$location,$modal,$filter,$http,$ro
                     {text:'Status',predicate:'status',sortable:true},
                     {text:'Action',predicate:"",sortable:true}                
     ];
+     $scope.sortby=function () {
+                $http.get('/warehouse').success(function(response){
+                        $scope.warehouse=response;
+                        $scope.products={};
+                })
+       }
 
     $scope.open=function(p,size){
         var modalInstance = $modal.open({

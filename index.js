@@ -43,7 +43,7 @@ app.put('/warehouse/:id', function(req,res){
     console.log(req.body.name);
     db.warehouse.findAndModify({
         query : {_id : mongojs.ObjectId(id)},
-        update : {$set : {name:req.body.name, description:req.body.description, price:req.body.price, stock:req.body.stock, packing:req.body.packing }},
+        update : {$set : {category:req.body.category,name:req.body.name, description:req.body.description, price:req.body.price, stock:req.body.stock, packing:req.body.packing }},
         new : true }, function(err,doc){
                 res.json(doc);
         });
